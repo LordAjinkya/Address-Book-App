@@ -177,3 +177,10 @@ select {
     margin-left: 5px;
 }
 
+error-output {
+    margin-left: 10px;
+    font-size: 15px;
+    font-style: bold;
+    color: red;
+}
+
