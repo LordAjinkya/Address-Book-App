@@ -1,106 +1,119 @@
-window.addEventListener('DOMContentLoaded',(event) =>{
-    const fullName = document.querySelector('#fullName');
+window.addEventListener('DOMContentLoaded', (event) => {
+    const name = document.querySelector('#name');
     const textError = document.querySelector('.text-error');
-
-    fullName.addEventListener('input',function () {
-        if(fullName.value.length == 0) {
+    name.addEventListener('input', function () {
+        if (name.value.length == 0) {
             textError.textContent = "";
             return;
         }
-        try{
-            (new Contact()).fullName = fullName.value;;
+        try {
+            (new AddressBookData()).fullname = name.value;;
             textError.textContent = "";
-        }catch(e){
+        } catch (e) {
             textError.textContent = e;
         }
     });
 
-    const phoneNo = document.querySelector('#tel');
-    const phoneError = document.querySelector('.mobile-error');
-    phoneNo.addEventListener('input',function () {
-        if(phoneNo.value.length == 0){
+    const phone = document.querySelector('#phone');
+    const phoneError = document.querySelector('.phone-error');
+    phone.addEventListener('input', function () {
+        if (phone.value.length == 0) {
             phoneError.textContent = "";
             return;
         }
-        try{
-            (new Contact()).phoneNo = phoneNo.value;;
-            phoneError.textContent ="";
-        }catch (e) {
+        try {
+            (new AddressBookData()).phone = phone.value;;
+            phoneError.textContent = "";
+        } catch (e) {
             phoneError.textContent = e;
         }
     });
 
-
     const address = document.querySelector('#address');
-    const addressError = document.querySelector('.address-error');
+    const addressError = document.querySelector('.add-error');
     address.addEventListener('input', function () {
         if (address.value.length == 0) {
             addressError.textContent = "";
             return;
         }
         try {
-            (new Contact()).address = address.value;;
+            (new AddressBookData()).address = address.value;;
             addressError.textContent = "";
         } catch (e) {
             addressError.textContent = e;
         }
     });
-});    
-    
-/**UC6 */
 
+    const zip = document.querySelector('#zip');
+    const zipError = document.querySelector('.zip-error');
+    zip.addEventListener('input', function () {
+        if (zip.value.length == 0) {
+            zipError.textContent = "";
+            return;
+        }
+        try {
+            (new AddressBookData()).zip = zip.value;;
+            zipError.textContent = "";
+        } catch (e) {
+            zipError.textContent = e;
+        }
+    });
+
+    checkForUpdate();
+});
+
+// UC-6
 const save = () => {
     try{
-        
-        let contact = saveData();
-        createAndUpdateStorage(contact);
-    }catch(e){
-        return ;
+        let addressBookData = createAddressBook();
+        createAndUpdateStorage(addressBookData);
+    }catch (e) {
+        return;
     }
-}; 
+}
 
-const saveData = () => {
-    let contact = new Contact();
+//UC-6
+const createAddressBook = () => {
+    let addressBookData = new AddressBookData();
     try{
-        contact.fullName = getInputValueById('#fullName');
+        addressBookData.fullname = getInputValuesById('#name');
     }catch(e){
-        setValue('.test-error',e);
+        setTextValue('.test-error', e);
         throw e;
     }
-    contact.fullName = getInputValueById('#fullName');
-    contact.address = getInputValueById('#address');
-    contact.phoneNo = getInputValueById('#tel');
-    contact.city = getInputValueById('#city');
-    contact.state = getInputValueById('#state');
-    contact.zip = getInputValueById('#zip');
-    alert(contact.toString());
-    return contact;
+    addressBookData.id = Math.floor((Math.random() * 100000) + 1);
+    addressBookData.phone = getInputValuesById('#phone');
+    addressBookData.address = getInputValuesById('#address');
+    addressBookData.city = getInputValuesById('#city');
+    addressBookData.state = getInputValuesById('#state');
+    addressBookData.zip = getInputValuesById('#zip');
+    alert(addressBookData.toString());
+    return addressBookData;
 }
 
- /**Adding to local storage and update  */
- function createAndUpdateStorage(contact) {
-
-    let contactDataList = JSON.parse(localStorage.getItem("ContactDataList"));
-
-    if(contactDataList != undefined) {
-        contactDataList.push(contact);
-    } else {
-        contactDataList = [contact];
+// UC-8
+function createAndUpdateStorage(addressBookData){
+    let addressBookList = JSON.parse(localStorage.getItem("AddressBookList"));
+    if(addressBookList != undefined){
+        addressBookList.push(addressBookData);
     }
-    alert(contactDataList.toString());
-    localStorage.setItem("ContactDataList", JSON.stringify(contactDataList));
+    else{
+        addressBookList = [addressBookData];
+    }
+    alert(addressBookList.toString());
+    localStorage.setItem("AddressBookList", JSON.stringify(addressBookList));
 }
 
-const getInputValueById = (id) => {
+const getInputValuesById = (id) => {
     let value = document.querySelector(id).value;
     return value;
 }
 
-/**UC9 Resetting the form by using RESET Button */
+//UC-9
 const resetForm = () => {
-    setValue('#fullName','');
+    setValue('#name','');
+    setValue('#phone','');
     setValue('#address','');
-    setValue('#tel','');
     setValue('#city','');
     setValue('#state','');
     setValue('#zip','');
