@@ -1,76 +1,76 @@
-window.addEventListener('DOMContentLoaded',(event) =>{
-    const fullName = document.querySelector('#fullName');
-    const textError = document.querySelector('.textError');
+class AddressBook {
 
-    fullName.addEventListener('input',function () {
-        if(fullName.value.length == 0) {
-            textError.textContent = "";
-            return
-        }
-        try{
-            (new Contact()).fullName = fullName.value;
-            textError.textContent = "";
-        }catch(e){
-            textError.textContent = e;
-        }
-    });
-
-
-    const phoneNo = document.querySelector('#tel');
-    const phoneError = document.querySelector('.mobile-error');
-    phoneNo.addEventListener('input',function () {
-        if(phoneNo.value.length == 0){
-            phoneError.textContent = "";
-            return
-        }
-        try{
-            (new Contact()).phoneNumber = phoneNo.value;
-            phoneError.textContent ="";
-        }catch (e) {
-            phoneError.textContent = e;
-        }
-    });
-
-
-    const address = document.querySelector('#address');
-    const addressError = document.querySelector('.address-error');
-    address.addEventListener('input', function () {
-        if (address.value.length == 0) {
-            addressError.textContent = "";
-            return
-        }
-        try {
-            (new Contact()).address = address.value;
-            addressError.textContent = "";
-        } catch (e) {
-            addressError.textContent = e;
-        }
-    });
-    
-    /**UC6 */
-
-    const save = (event) => {
-        try{
-            let contact = saveData();
-            createAndUpdateStorage(contact);
-        }catch(e){
-            return ;
-        }
-    };
-
-    function saveData(){
-        let contact = new Contact();
-        contact._fullName = getInputValueById('#fullName');
-        contact._address = getInputValueById('#address');
-        contact._phoneNumber = getInputValueById('#tel');
-        contact._city = getInputValueById('#city');
-        contact._state = getInputValueById('#state');
-        contact._zip = getInputValueById('#zip');
+    //getter and setter methods :
+    get id() {
+        return this._id;
+    }
+    set id(id) {
+        this._id = id;
     }
 
-    const getInputValueById = (id) => {
-        let value = document.querySelector(id).value;
-        return value;
+    get name() { return this._name; }
+    set name(name) {
+        let nameRegex = RegExp('^[A-Z]{1}[a-zA-Z\\s]{2,}$');
+        if (nameRegex.test(name))
+            this._name = name;
+        else throw 'Name is Incorrect!';
     }
 
-})
+    get phoneNumber()
+    {
+        return this._phoneNumber;
+    }
+    set phoneNumber(phoneNumber)
+    {
+        let phoneRegex = RegExp('^[\+]?(([0-9]{2})?)[0-9]{10}$');
+        if(phoneRegex.test(phoneNumber))
+        this._phoneNumber = phoneNumber;
+        else throw 'Incorrect Phone number Format';
+    }
+
+    get address() {
+        return this._address;
+    }
+    set address(address) {
+        let addressRegex = RegExp('^([a-zA-z0-9]{3,}[; ;])*$'); 
+        if(addressRegex.test(address))
+        this._address = address;
+        else throw 'Incorrect Address Fromat';
+    }
+
+    get city()
+    {
+        return this._city;
+    }
+
+    set city(city)
+    {
+        this._city=city;
+    }
+
+    get state() {
+        return this._state;
+    }
+    set state(state) {
+         this._state = state;
+    }
+
+    get zip()
+    {
+       return this._zip;
+    }
+    set zip(zip)
+    {
+       let zipRegex = RegExp('[0-9]{6}');
+       if(zipRegex.test(zip))
+       this._zip = zip;
+       else throw 'Invalid zip format';
+    }
+
+    //method 
+    toString() {
+        return "id =" + this.id + ",name = " + this.name + ",address = " + this.address +
+            " ,phoneNumber = " + this.phoneNumber + " ,city = " + this.city +
+            " ,state = " + this.state +" ,zip = " + this.zip;
+    }
+}
