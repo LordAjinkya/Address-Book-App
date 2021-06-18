@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <!-- UC10 -->
+    <!--UC10-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Address Book Page</title>
-    <link rel="stylesheet" href="../css/home.css">  
+    <link rel = "shortcut icon" href = "../assets/images/logo.jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/home.css">
+    <title>Address Book</title>
 </head>
+
 <body>
-    <!--UC10 Creating header content with logo-->
+    <!-- UC-10 -->
     <header class="header-content header">
         <div class="logo-content">
             <img src="../assets/images/logo.jpeg" alt="">
@@ -18,15 +22,23 @@
             </div>
         </div>
     </header>
-      <!--UC11 Ability to content header-->
-      <div class="main-content">
+    <!-- UC-11 -->
+    <div class="main-content">
         <div class="header-content">
-            <div class="person-details-text">
-                Person Details
-            </div>
-            <a href="../pages/HomePage.html" class="add-button">
-                <img src="../assets/icons/add-24px.svg" alt = "">Add Person</a>
+            <div class="person-detail-text">Person Details<div class="person-count">10</div>
+        </div>
+            <a href="../pages/AddressBook.html" class="add-button">
+            <img src="../assets/icons/add-24px.svg" alt="">Add Person</a>
+        </div>
+        <div class="table-main">
+            <table id="table-display" class="table">
+                <!-- UC-12 -->
+            </table>
         </div>
     </div>
+    <script src="../js/home.js"></script>
+    <script src="../js/AddressBook.js"></script>
+    <script src="../js/utility.js"></script>
+    <script src="../js/site_properties.js"></script>
 </body>
 </html>
